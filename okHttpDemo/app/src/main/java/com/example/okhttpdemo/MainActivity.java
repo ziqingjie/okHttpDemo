@@ -8,13 +8,10 @@ import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.IOException;
-import java.util.concurrent.ForkJoinPool;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -35,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case SUCCESS:
-                    Log.e(TAG,"请求成功");
                    byte[] b = (byte[]) msg.obj;
                     Bitmap bitmap=new CropSquareTrans().transform(BitmapFactory.decodeByteArray(b,0,b.length));
                    imageView.setImageBitmap(bitmap);
@@ -53,13 +49,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
        imageView=(ImageView)findViewById(R.id.imageView);
-       
+        button=(Button)findViewById(R.id.button);
         //创建网络请求对象
         okHttpClient = new OkHttpClient();
         //使用get请求获取请求对象
         final Request request = new Request.Builder().get().url(path).build();
 
-        button=(Button)findViewById(R.id.button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,7 +63,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onFailure(Call call, IOException e) {
 
                     }
-
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
 
@@ -87,25 +81,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

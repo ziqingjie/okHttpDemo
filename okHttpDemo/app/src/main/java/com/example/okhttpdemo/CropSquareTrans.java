@@ -6,7 +6,7 @@ import com.squareup.picasso.Transformation;
 
 
 /**
- * Created by ziqingjie on 2017/3/8.
+ * Created by ziqingjie
  */
 
 public class CropSquareTrans implements Transformation {
